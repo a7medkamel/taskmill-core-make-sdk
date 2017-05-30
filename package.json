@@ -1,0 +1,28 @@
+{
+  "name": "taskmill-core-make-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a7medkamel/taskmill-core-make-sdk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a7medkamel/taskmill-core-make-sdk/issues"
+  },
+  "homepage": "https://github.com/a7medkamel/taskmill-core-make-sdk#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "config": "^1.26.1",
+    "lodash": "^4.17.4",
+    "redis": "^2.7.1",
+    "socket.io": "^1.7.3",
+    "weighted": "^0.3.0",
+    "winston": "^2.3.1"
+  }
+}
