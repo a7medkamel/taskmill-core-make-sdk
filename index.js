@@ -1,4 +1,5 @@
-var config    = require('config-url')
+var Promise   = require('bluebird')
+  , config    = require('config-url')
   , winston   = require('winston')
   , redis     = require('redis')
   , urljoin   = require('url-join')
