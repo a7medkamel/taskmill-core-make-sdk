@@ -1,5 +1,10 @@
 {
   "make" : {
-    "url" : "http://make.breadboard.io:8050"
+    "url" : "http://make.breadboard.io:8075",
+    "redis" : {
+      "db": 4,
+      "host": "[REDIS_HOST]",
+      "port": 6379
+    }
   }
 }
