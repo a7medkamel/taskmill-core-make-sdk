@@ -135,9 +135,9 @@ function make(remote, sha, options = {}) {
 }
 
 function make_new(remote, sha, options = {}) {
-  let { blob, filename, token, bearer, cache } = options;
+  let { blob, filename, token, bearer, cache, tailf } = options;
 
-  let json = { remote, sha, blob, filename, token, cache };
+  let json = { remote, sha, blob, filename, token, cache, tailf };
 
   return rp.post(make_url, { json, headers : { 'authorization' : bearer }, simple : false, resolveWithFullResponse : true }).promise();
 }
