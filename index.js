@@ -59,7 +59,8 @@ function set(result, options) {
 }
 
 function del(hash) {
-  return cache.del(hash);
+  // todo [akamel] ug #97 in node-cache-manager where del doesn't return a promise in multi-caching
+  return Promise.fromCallback((cb) => cache.del(hash, cb));
 }
 
 function get(hash) {
