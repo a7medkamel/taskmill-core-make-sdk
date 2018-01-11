@@ -85,17 +85,16 @@ function make(remote, sha, options = {}) {
 
   let { blob, timeout } = options;
 
-  let { key, hash } = key_gen(remote, sha, { single_use });
-
-
   if (!blob) {
+    let { key, hash } = key_gen(remote, sha, { single_use });
+
     return get(hash)
             .then((result) => {
               if (result) {
                 return result;
               }
 
-              return make_new(remote, sha, options);
+              return make_new(remote, sha, { key, hash, ...options });
             });
   } else {
     return make_new(remote, sha, options);
@@ -103,7 +102,7 @@ function make(remote, sha, options = {}) {
 }
 
 function make_new(remote, sha, options = {}) {
-  let { blob, filename, token, bearer, cache, tailf } = options;
+  let { blob, filename, token, bearer, cache, tailf, key, hash } = options;
 
   let json = { remote, sha, blob, filename, token, cache, tailf };
 
