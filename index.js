@@ -124,7 +124,8 @@ function make(remote, sha, options = {}) {
                                 });
                         }
 
-                        throw new Error(body);
+                        let { error } = body;
+                        throw new Error(error);
                       });
             });
   } else {
