@@ -87,6 +87,7 @@ function make(remote, sha, options = {}) {
 
   let { key, hash } = key_gen(remote, sha, { single_use });
 
+
   if (!blob) {
     return get(hash)
             .then((result) => {
@@ -94,45 +95,10 @@ function make(remote, sha, options = {}) {
                 return result;
               }
 
-              return make_new(remote, sha, options)
-                      .then((response) => {
-                        let { statusCode, body } = response;
-
-                        if (statusCode == 200) {
-                          winston.info('found container', key, hash);
-                          return body;
-                        }
-
-                        // if we are building already, wait and try to get
-                        if (statusCode == 423) {
-                          winston.info('build in progress', key, hash);
-                          // todo [akamel] ensure that the lock is being renewed or active
-                          return retry(
-                                    () => {
-                                      winston.info('waiting for build...', key, hash);
-                                      return get(hash)
-                                              .then((r) => {
-                                                if (!r) { throw new Error('make timeout') };
-
-                                                return r;
-                                              })
-                                    }
-                                  , { interval : 500, timeout }
-                                )
-                                .tap((result) => {
-                                  winston.info('build complete', key, hash);
-                                });
-                        }
-
-                        let { error } = body;
-                        throw new Error(error);
-                      });
+              return make_new(remote, sha, options);
             });
   } else {
-    return make_new(remote, sha, options)
-            .then((response) => {
-              return response.body;
-            });
+    return make_new(remote, sha, options);
   }
 }
 
@@ -141,7 +107,43 @@ function make_new(remote, sha, options = {}) {
 
   let json = { remote, sha, blob, filename, token, cache, tailf };
 
-  return rp.post(make_url, { json, headers : { 'authorization' : bearer }, simple : false, resolveWithFullResponse : true }).promise();
+  return Promise
+          .try(() => {
+            return rp.post(make_url, { json, headers : { 'authorization' : bearer }, simple : false, resolveWithFullResponse : true });
+          })
+          .then((response) => {
+            let { statusCode, body } = response;
+
+            if (statusCode == 200) {
+              winston.info('found container', key, hash);
+              return body;
+            }
+
+            // if we are building already, wait and try to get
+            if (statusCode == 423) {
+              winston.info('build in progress', key, hash);
+              // todo [akamel] ensure that the lock is being renewed or active
+              return retry(
+                        () => {
+                          winston.info('waiting for build...', key, hash);
+                          return get(hash)
+                                  .then((r) => {
+                                    if (!r) { throw new Error('make timeout') };
+
+                                    return r;
+                                  })
+                        }
+                      , { interval : 500, timeout }
+                    )
+                    .tap((result) => {
+                      winston.info('build complete', key, hash);
+                    });
+            }
+
+            let { error } = body;
+
+            throw new Error(error);
+          });
 }
 
 const ttl = 5 * 1000;
