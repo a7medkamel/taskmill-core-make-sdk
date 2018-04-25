@@ -102,7 +102,7 @@ function make(remote, sha, options = {}) {
 }
 
 function make_new(remote, sha, options = {}) {
-  let { blob, filename, token, bearer, cache, tailf, key, hash } = options;
+  let { blob, filename, token, bearer, cache, tailf, key, hash, timeout = 20 * 1000 } = options;
 
   let json = { remote, sha, blob, filename, token, cache, tailf };
 
