@@ -159,6 +159,7 @@ module.exports = {
   , set
   , get
   , del
+  , extend
   , lock
   , extend
   , unlock
