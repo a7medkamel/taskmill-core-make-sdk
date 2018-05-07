@@ -12,7 +12,7 @@ var Promise     = require('bluebird')
   , retry       = require('bluebird-retry')
   ;
 
-var cache_mem = cache_man.caching({ store : 'memory', ttl : 5/*seconds*/ });
+var cache_mem = cache_man.caching({ store : 'memory', ttl : 5 /*seconds*/ });
 
 // todo [akamel] not all users of sdk need to connect to redis (if only used for key_gen)
 var cache_red = cache_man.caching({
@@ -54,7 +54,7 @@ function key_gen(remote, sha, options = {}) {
   return { key, hash };
 }
 
-function set(result, options) {
+function set(result, options = {}) {
   return cache.set(result.hash, result, options);
 }
 
@@ -63,21 +63,14 @@ function del(hash) {
   return Promise.fromCallback((cb) => cache.del(hash, cb));
 }
 
-function get(hash) {
-  // return cache
-  //         .wrap(hash, () => {
-  //           return undefined;
-  //         });
-  return cache_mem
-          .get(hash)
-          .then((result) => {
-            if (!result) {
-              return cache_red.get(hash).then((result) => { cache_mem.set(hash, result); return result; });
-            }
+function extend(hash, options = {}) {
+  let { ttl } = options;
 
-            return result;
-          })
-          ;
+  return Promise.fromCallback((cb) => redis_client.expire(hash, ttl, cb));
+}
+
+function get(hash) {
+  return Promise.fromCallback((cb) => cache.get(hash, cb));
 }
 
 function make(remote, sha, options = {}) {

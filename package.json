@@ -17,21 +17,21 @@
   },
   "homepage": "https://github.com/a7medkamel/taskmill-core-make-sdk#readme",
   "dependencies": {
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.1",
     "bluebird-retry": "^0.11.0",
-    "cache-manager": "^2.4.0",
-    "cache-manager-redis-store": "^1.2.0",
-    "config": "^1.26.1",
+    "cache-manager": "^2.9.0",
+    "cache-manager-redis-store": "^1.4.0",
+    "config": "^1.30.0",
     "config-url": "git+https://github.com/a7medkamel/config-url.git",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "node-uuid": "^1.4.8",
-    "redis": "^2.7.1",
-    "redlock": "^3.0.0",
-    "request": "^2.81.0",
-    "request-promise": "^4.2.1",
-    "socket.io": "^2.0.3",
-    "url-join": "^2.0.2",
+    "redis": "^2.8.0",
+    "redlock": "^3.1.2",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
+    "socket.io": "^2.1.0",
+    "url-join": "^4.0.0",
     "weighted": "^0.3.0",
-    "winston": "^2.3.1"
+    "winston": "^2.4.2"
   }
 }
