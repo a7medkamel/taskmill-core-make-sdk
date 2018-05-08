@@ -141,17 +141,17 @@ function make_new(remote, sha, options = {}) {
 const ttl = 5 * 1000;
 // const ttl = 5000 * 1000;
 
-function lock(hash) {
-  return redlock.lock(`lock:${hash}`, ttl);
-}
-
-function extend(lock) {
-  return lock.extend(ttl);
-}
-
-function unlock(lock) {
-  return lock.unlock();
-}
+// function lock(hash) {
+//   return redlock.lock(`lock:${hash}`, ttl);
+// }
+//
+// function extend(lock) {
+//   return lock.extend(ttl);
+// }
+//
+// function unlock(lock) {
+//   return lock.unlock();
+// }
 
 module.exports = {
     make
@@ -160,7 +160,7 @@ module.exports = {
   , get
   , del
   , extend
-  , lock
-  , extend
-  , unlock
+  // , lock
+  // , extend
+  // , unlock
 };
