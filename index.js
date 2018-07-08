@@ -113,7 +113,7 @@ function make_new(remote, sha, options = {}) {
 
             // if we are building already, wait and try to get
             if (statusCode == 423) {
-              winston.info('build in progress', key, hash, body);
+              winston.info('build in progress', key, hash);
               // todo [akamel] ensure that the lock is being renewed or active
               return retry(
                         () => {
