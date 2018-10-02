@@ -78,9 +78,9 @@ function make(remote, sha, options = {}) {
 
   let { blob, timeout } = options;
 
-  if (!blob) {
-    let { key, hash } = key_gen(remote, sha, { single_use });
+  let { key, hash } = key_gen(remote, sha, { single_use });
 
+  if (!blob) {
     return get(hash)
             .then((result) => {
               if (result) {
@@ -90,7 +90,7 @@ function make(remote, sha, options = {}) {
               return make_new(remote, sha, { key, hash, ...options });
             });
   } else {
-    return make_new(remote, sha, options);
+    return make_new(remote, sha, { key, hash, ...options });
   }
 }
 
